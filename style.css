@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  margin: 50px 0;
+  font-size: 20px;
+}
+
+input {
+  width: 500px;
+  padding: 10px;
+  display: block;
+  margin: 0 auto 5px;
+}
+
+button {
+  width: 200px;
+  height: 50px;
+  margin: 0 auto 50px;
+  /* display: block; */
+  font-size: 16px;
+  flex-flow:row wrap;
+  justify-content:center;
+  place-items:center;
+}
+
+
+/* id */
+#output {
+  width: 500px;
+  display: block;
+  height: 500px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: auto;
+}
+
+#uname {
+  width: 500px;
+  height: 50px;
+  padding: 10px;
+  margin: 0 auto 5px;
+  display: block;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#text_building_name {
+  width: 500px;
+  height: 50px;
+  padding: 10px;
+  margin: 0 auto 5px;
+  display: block;
+  resize: none;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#Address{
+    width: 500px;
+    height: 50px;
+    padding: 10px;
+    margin: 0 auto 5px;
+    display: block;
+    resize: none;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#img_text {
+  width: 500px;
+  height: 30px;
+  padding: 10px;
+  margin: 0 auto 5px;
+  display: block;
+  resize: none;
+}
+
+#design_code {
+  width: 500px;
+  height: 50px;
+  padding: 10px;
+  margin: 0 auto 5px;
+  display: block;
+  resize: none;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+/* class */
+.msg:nth-child(odd){
+  margin-right: auto;
+  padding: 10px;
+  border: 1px solid gray;
+  width: 200px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.msg:nth-child(even){
+  margin-left: auto;
+  width: 200px;
+  margin-top:10px;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 6px;
+  background: pink;
+}
+
+.buttons{
+  width: 500px;
+  margin: auto;
+  place-items:center stretch;
+  display: flex;
+  /* justify-content:  */
+}
+
+
+.small_buttons {
+  width: 50px;
+  height: 20px;
+  margin: 0 auto 50px;
+  /* display: block; */
+  font-size: 5px;
+  flex-flow:row wrap;
+  justify-content:left;
+  place-items:left;
+}
