@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Structural Engineer Map chat app</title>
+    <link rel="stylesheet" href="css/reset.css">
+
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <h1>Chat App for World Structural Engineer</h1>
+    <!-- コンテンツ表示画面 -->
+    <div>
+        <!-- 各場所にidを設定しましょう -->
+        <div>
+            <input type="text" id="uname" placeholder="構造設計者名">
+        </div>
+        <div>
+            <textarea id="text_building_name" placeholder="建物名称"></textarea>
+            <!-- <textarea id="text_building_name" placeholder="竣工年"></textarea> -->
+            <textarea id="Address" placeholder="住所"></textarea>
+            <select name="Structural Design Code" id="design_code">
+              <option value="">設計基準を選んでください</option>
+              <option value="Japanese_Code">Japanese_Code</option>
+              <option value="American_Code">American_Code</option>
+              <option value="Euro_Code">Euro_Code</option>
+            </select>            
+            <p id="img_text">登録したい画像のファイルを選択してください</p>
+            <input type="file" id="imgUpload">
+        </div>
+           <div class="buttons">
+                <button id="send">送信</button>
+                <!-- <button id="delete">削除</button> -->
+            </div>
+       
+        <!-- style.cssに "overflow: auto;"を書いてみましょう！※最後に -->
+        <div id="output"></div>
+    </div>
+    <div>
+            <select name="Sort_by" id="sort_by">
+              <option value="">Mark logo by</option>
+              <option value="Name">Name</option>
+              <option value="Standard">Design_Code</option>
+            </select>  
+    </div>
+    <div class="small_buttons">
+      <button id="refresh_map">地図更新</button>
+      <!-- <button id="delete">削除</button> -->
+  </div>
+
+    <div id="map" style="height: 600px; width: 100%;"></div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" src="js/index.js"></script>
+</body>
+<script>
+     
+
+    let marker = [];
+    let infoWindow = [];
+    let markerData = [];// マーカーを立てる場所名・緯度・経度
+    markerData[0] =  {
+           name: 'test',
+           text:'test',
+           address:'東京都江東区東陽1-1-1',
+           design_code:'Japanese_Code',
+           lat: 35.6954806,
+           lng: 139.76325010000005,
+           icon: 'img/test.png' // TAM 東京のマーカーだけイメージを変更する
+     }
+    
+    let img_src = [];
+    img_src[0] = "img/test.png";
+    
+    function initMap() {
+     // 地図の作成
+     if(markerData.length==1){
+        var mapLatLng = new google.maps.LatLng({lat: markerData[0]['lat'], lng: markerData[0]['lng']}); // 緯度経度のデータ作成
+       map = new google.maps.Map(document.getElementById('map'), { // #mapに地図を埋め込む
+         center: mapLatLng, // 地図の中心を指定
+          zoom: 15 // 地図のズームを指定
+       });} else {
+        var mapLatLng = new google.maps.LatLng({lat: markerData.slice(-1)[0]['lat'], lng: markerData.slice(-1)[0]['lng']}); // 緯度経度のデータ作成
+       map = new google.maps.Map(document.getElementById('map'), { // #mapに地図を埋め込む
+         center: mapLatLng, // 地図の中心を指定
+          zoom: 15 // 地図のズームを指定
+          });
+       }
+     
+     // マーカー毎の処理
+     for (var i = 1; i < markerData.length; i++) {
+    //   console.log("data num:",i)
+            markerLatLng = new google.maps.LatLng({lat: markerData[i]['lat'], lng: markerData[i]['lng']}); // 緯度経度のデータ作成
+            marker[i] = new google.maps.Marker({ // マーカーの追加
+             position: markerLatLng, // マーカーを立てる位置を指定
+            //  content: pinViewBackground,
+                map: map // マーカーを立てる地図を指定
+                
+           });
+           
+     
+         infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
+             content: '<div class="map"> 構造設計者名:' + markerData[i]['name'] + '</div>'+'<div>建物名称:'+markerData[i]['text']+'</div>'+'<div>Structural Design Code:'+markerData[i]['standard']+'</div>'+'<div><img src='+img_src[i]+' style="width:50%"></div>' // 吹き出しに表示する内容
+           });
+            marker[i].setOptions({// TAM 東京のマーカーのオプション設定
+            icon: {
+             url: markerData[i]['icon'],
+             scaledSize: new google.maps.Size(30, 30)
+            },
+              optimized: false 
+          });
+         markerEvent(i); // マーカーにクリックイベントを追加
+     }
+     
+    //    marker[0].setOptions({// TAM 東京のマーカーのオプション設定
+    //         icon: {
+    //          url: markerData[0]['icon'],// マーカーの画像を変更
+    //          scaledSize: new google.maps.Size(30, 30)
+    // 	},
+        // optimized: false 
+      //  });
+      function markerEvent(i) {
+        marker[i].addListener('click', function() { // マーカーをクリックしたとき
+          infoWindow[i].open(map, marker[i]); // 吹き出しの表示
+      });
+    }
+    }
+            </script>
+     
+      
+      <!-- <script type="module" src="js/main2.js"></script> -->
+      <script type="module" src="js/index.js"></script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" ></script>
+</html>
